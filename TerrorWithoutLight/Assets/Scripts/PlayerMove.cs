@@ -1,23 +1,32 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class PlayerMove : MonoBehaviour
 {
+    //Player
     private Rigidbody2D rb2d;
+
+    //Movimiento
     private float movimientoHorizontal;
     [SerializeField] private float velocidadMovimiento;
     [SerializeField] private float suavizado;
-    [SerializeField] private Vector3 velocidad;
+    private Vector3 velocidad;
+
+    //Giro
     [SerializeField] private bool mirarDerecha;
 
+    //Salto
     [SerializeField] private float fuerzaSalto;
     [SerializeField] private Vector3 dimensionCaja;
     [SerializeField] private Transform infoPiso;
     [SerializeField] private LayerMask capaSuelo;
     [SerializeField] private bool estoyEnPiso;
     private bool salto;
+    public event EventHandler OnJump;
 
+    //Animaciones
     private Animator animator;
 
 
@@ -29,11 +38,16 @@ public class PlayerMove : MonoBehaviour
 
     private void Update()
     {
+        //Movimiento
         movimientoHorizontal = Input.GetAxisRaw("Horizontal") * velocidadMovimiento;
+
+        //Animaciones
         animator.SetFloat("MovimientoHorizontal", Mathf.Abs(movimientoHorizontal));
         animator.SetBool("EstoyEnPiso", estoyEnPiso);
         animator.SetFloat("MovimientoEnY", rb2d.velocity.y);
-        if (Input.GetButtonDown("Jump"))
+
+        //Salto
+        if (Input.GetKeyDown(KeyCode.Z))
         {
             salto = true;
         }
@@ -41,15 +55,23 @@ public class PlayerMove : MonoBehaviour
 
     private void FixedUpdate()
     {
+        //Salto
         estoyEnPiso = Physics2D.OverlapBox(infoPiso.position, dimensionCaja, 0f, capaSuelo);
+
+        //Movimiento
         Mover(movimientoHorizontal * Time.fixedDeltaTime);
+
+        //Salto
         salto = false;
     }
 
     private void Mover(float movimientoHorizontal)
     {
+        //Movimiento
         Vector3 velocidadFinal = new Vector2(movimientoHorizontal, rb2d.velocity.y);
         rb2d.velocity = Vector3.SmoothDamp(rb2d.velocity, velocidadFinal, ref velocidad, suavizado);
+
+        //Girar
         if (movimientoHorizontal < 0 && mirarDerecha)
         {
             Girar();
@@ -58,9 +80,13 @@ public class PlayerMove : MonoBehaviour
         {
             Girar();
         }
+
+        //Salto
         if (estoyEnPiso && salto)
         {
-            rb2d.AddForce(new Vector2(0f, fuerzaSalto));
+            rb2d.AddForce(new Vector2(rb2d.velocity.x, fuerzaSalto));
+            estoyEnPiso = false;
+            OnJump?.Invoke(this, EventArgs.Empty);
         }
     }
 
@@ -68,11 +94,9 @@ public class PlayerMove : MonoBehaviour
     {
         mirarDerecha = !mirarDerecha;
         transform.eulerAngles = new Vector2(0, transform.eulerAngles.y + 180);
-        //Vector3 escala = rb2d.transform.localScale;
-        //escala.x *= -1;
-        //rb2d.transform.localScale = escala;
     }
 
+    //Visualizar
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.green;
