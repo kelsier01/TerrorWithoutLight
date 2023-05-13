@@ -5,10 +5,11 @@ using UnityEngine;
 public class movimientoPlataforma : MonoBehaviour
 {
     // Start is called before the first frame update
-    public float velocidad;
-    public Transform controladorSuelo;
-    public float distancia;
-    public bool moviendoDerecha;
+    [SerializeField] private float velocidad;
+    [SerializeField] private Transform controladorSuelo;
+    [SerializeField] private float distancia;
+    [SerializeField] private bool moviendoDerecha;
+    [SerializeField] private LayerMask infoPiso;
 
     public Rigidbody2D rb;
 
@@ -19,7 +20,7 @@ public class movimientoPlataforma : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
     }
     private void FixedUpdate(){
-       RaycastHit2D informacionSuelo = Physics2D.Raycast(controladorSuelo.position, Vector2.down, distancia);
+       RaycastHit2D informacionSuelo = Physics2D.Raycast(controladorSuelo.position, Vector2.down, distancia, infoPiso);
        rb.velocity = new Vector2(velocidad, rb.velocity.y);
        animator.SetBool("camina", true);
        if(informacionSuelo == false){

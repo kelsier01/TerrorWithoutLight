@@ -178,6 +178,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   "da\xF1o": 10
+  timePerDamage: 0
 --- !u!61 &115424946
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1776,7 +1777,7 @@ Rigidbody2D:
   m_GravityScale: 1
   m_Material: {fileID: 0}
   m_Interpolate: 0
-  m_SleepingMode: 1
+  m_SleepingMode: 0
   m_CollisionDetection: 0
   m_Constraints: 4
 --- !u!212 &1230057601
@@ -3350,6 +3351,10 @@ PrefabInstance:
     - target: {fileID: 5380082979670202641, guid: 81f44e21d22c2a64bbf2cf1ef49218c9, type: 3}
       propertyPath: m_Name
       value: Grid
+      objectReference: {fileID: 0}
+    - target: {fileID: 5380082979670202641, guid: 81f44e21d22c2a64bbf2cf1ef49218c9, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5380082979670202643, guid: 81f44e21d22c2a64bbf2cf1ef49218c9, type: 3}
       propertyPath: m_RootOrder
@@ -16004,6 +16009,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Esqueleto
       objectReference: {fileID: 0}
+    - target: {fileID: 7579362403539579703, guid: 6337ae67afe4c3c4c84c2b3755493eee, type: 3}
+      propertyPath: infoPiso.m_Bits
+      value: 8
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6337ae67afe4c3c4c84c2b3755493eee, type: 3}
 --- !u!1001 &8666785823017149662
@@ -16057,9 +16066,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8666785824115499074, guid: ba2ab61f2cb33f3409d83ebc5e73bee0, type: 3}
+      propertyPath: "da\xF1o"
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 8666785824115499074, guid: ba2ab61f2cb33f3409d83ebc5e73bee0, type: 3}
+      propertyPath: timePerDamage
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8666785824115499077, guid: ba2ab61f2cb33f3409d83ebc5e73bee0, type: 3}
       propertyPath: m_Name
       value: ' Spike Plate'
+      objectReference: {fileID: 0}
+    - target: {fileID: 8666785824115499077, guid: ba2ab61f2cb33f3409d83ebc5e73bee0, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ba2ab61f2cb33f3409d83ebc5e73bee0, type: 3}

@@ -5,13 +5,20 @@ using UnityEngine;
 public class Damage : MonoBehaviour
 {
     [SerializeField] private float daño;
+    [SerializeField] private float timePerDamage;
+    private float tiempoEspera;
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
         {
-            collision.GetComponent<Vitality>().recibir_daño(daño);
-            Debug.Log("Estoy dentro de las espinas.");
+            tiempoEspera -= Time.deltaTime;
+            if (tiempoEspera <= 0)
+            {
+                collision.GetComponent<Vitality>().recibir_daño(daño);
+                tiempoEspera = timePerDamage;
+            }
+            
         }
     }
 
@@ -19,7 +26,7 @@ public class Damage : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            Debug.Log("Estoy fuera de las espinas.");
+            
         }
     }
 }
