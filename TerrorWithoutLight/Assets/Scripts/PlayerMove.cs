@@ -24,10 +24,12 @@ public class PlayerMove : MonoBehaviour
     [SerializeField] private LayerMask capaSuelo;
     [SerializeField] private bool estoyEnPiso;
     private bool salto;
-    public event EventHandler OnJump;
 
     //Animaciones
     private Animator animator;
+
+    //Evento sin traspaso de argumentos
+    public event EventHandler OnSalto;
 
 
     private void Start()
@@ -80,13 +82,18 @@ public class PlayerMove : MonoBehaviour
         {
             Girar();
         }
+        Salto();
+    }
 
+    private void Salto() 
+    {
         //Salto
         if (estoyEnPiso && salto)
         {
             rb2d.AddForce(new Vector2(rb2d.velocity.x, fuerzaSalto));
             estoyEnPiso = false;
-            OnJump?.Invoke(this, EventArgs.Empty);
+            OnSalto?.Invoke(this, EventArgs.Empty);
+            
         }
     }
 
